@@ -3,7 +3,7 @@
 CREATE TABLE users(
 uid INTEGER NOT NULL AUTO_INCREMENT, 
 uname VARCHAR(255) NOT NULL, 
-pwd VARCHAR(255) NOT NULL),
+pwd VARCHAR(255) NOT NULL,
 CONSTRAINT usersconstraint_pk PRIMARY KEY(uid)
 );
 
@@ -40,7 +40,7 @@ starttime TIMESTAMP,
 endtime TIMESTAMP,
 CONSTRAINT usage_fk_uid FOREIGN KEY(userid) REFERENCES users(uid),
 CONSTRAINT usage_fk_sid FOREIGN KEY(serviceid) REFERENCES services(serviceid),
-CONSTRAINT usage_fk_id FOREING KEY(resourceid) REFERENCES resources(resourceid),
+CONSTRAINT usage_fk_id FOREING KEY(resourceid) REFERENCES resources(resourceid)
 ON DELETE CASCADE
 );
 
