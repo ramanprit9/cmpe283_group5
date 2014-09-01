@@ -1,0 +1,53 @@
+----> CREATE TABLE users(uid , uname , pwd)
+
+CREATE TABLE users(
+uid INTEGER NOT NULL AUTO_INCREMENT, 
+uname VARCHAR(255) NOT NULL, 
+pwd VARCHAR(255) NOT NULL),
+CONSTRAINT usersconstraint_pk PRIMARY KEY(uid)
+);
+
+----->CREATE TABLE service(serviceid , uid(fk), servicetype, status, date-created, json);
+CREATE TABLE services(
+serviceid INTEGER NOT NULL UNIQUE,
+uid INTEGER NOT NULL,
+servicetype VARCHAR(255) NOT NULL,
+status VARCHAR(20) ,
+datecreated VARCHAR(255),
+json VARCHAR(255),
+CONSTRAINT services_pk PRIMARY KEY (serviceid),
+CONSTRAINT services_fk FOREIGN KEY (uid) REFERENCES users(uid) ON DELETE CASCADE
+);
+
+----->CREATE TABLE resources(resourceid  , serviceid (fk), resourcetypeid, status , date created, json)
+CREATE TABLE resources(
+resourceid INTEGER NOT NULL AUTO_INCREMENT,
+serviceid INTEGER NOT NULL,
+resourcetype VARCHAR(255),
+status VARCHAR(20),
+datecreated VARCHAR(255),
+json VARCHAR(255),
+CONSTRAINT resources_pk PRIMARY KEY (resourceid),
+CONSTRAINT resources_fk FOREIGN KEY (serviceid) REFERENCES services(serviceid) ON DELETE CASCADE
+);
+
+------>CREATE TABLE resource_usage(uid(fk), sid(fk),rid(fk), timestart, timeend)
+CREATE TABLE resource_usage(
+userid INTEGER NOT NULL,
+serviceid INTEGER NOT NULL,
+resourceid INTEGER NOT NULL,
+starttime TIMESTAMP,
+endtime TIMESTAMP,
+CONSTRAINT usage_fk_uid FOREIGN KEY(userid) REFERENCES users(uid),
+CONSTRAINT usage_fk_sid FOREIGN KEY(serviceid) REFERENCES services(serviceid),
+CONSTRAINT usage_fk_id FOREING KEY(resourceid) REFERENCES resources(resourceid),
+ON DELETE CASCADE
+);
+
+------->CREATE TABLE jobs(jobid, jobtype)
+CREATE TABLE jobs( 
+jobid INTEGER NOT NULL AUTO_INCREMENT,
+jobclassname VARCHAR(255) NOT NULL,
+json VARCHAR(255) NOT NULL,
+CONSTRAINT jobs_pk PRIMARY KEY (jobid)
+);
