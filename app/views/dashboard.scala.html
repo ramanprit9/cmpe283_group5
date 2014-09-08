@@ -1,0 +1,70 @@
+@(webservices : List[String], dbservices :List[String]) 
+
+@main("Welcome to My Play") {
+
+
+<div style="background-color: #3F4042; height: 100px">
+
+</div>
+<div align="center">
+<br>
+<br>
+<br>
+<div align="left" style="color: #DBA901; width: 60%; height: 70%">Logged in as: Jason </div>
+<br>
+
+ 		<table cellspacing="6" border="1" style="width: 60%; height: 70%;"  >
+ 		<tr align="center">
+ 			<td >
+ 				<table>
+ 				<tr>
+ 				<td>
+ 					Websites:
+ 				</td>
+ 				</tr>
+	 				<tbody>
+							@for(webname <- webservices) {
+							<tr>
+								<td><a href="">@webname</a></td>
+							</tr>
+							}
+						</tbody>
+	 				
+ 				</table>
+ 			</td>
+ 			<td>
+	 				<table >
+	 				<tr>
+ 				<td>
+ 					Database:
+ 				</td>
+ 				</tr>
+						<tbody>
+							@for(dbname <- dbservices) {
+							<tr>
+								<td><a href="">@dbname</a></td>
+							</tr>
+							}
+						</tbody>
+					</table>
+	 				
+ 			</td>
+ 			<td>
+ 				<table>
+	 				<tr >
+	 					<td>
+	 				green
+	 					</td>
+	 				</tr>
+	 				
+ 				</table>
+ 			</td>
+ 		</tr>
+ 		</table>
+</div>
+    
+}
+
+
+
+
