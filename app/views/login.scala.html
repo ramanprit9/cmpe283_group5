@@ -1,0 +1,64 @@
+@(message: String)
+
+@main("Welcome to My Play") {
+
+
+<div style="background-color: #3F4042; height: 100px;font-size: medium;color: white">
+</div>
+<div align="center">
+<br>
+<br>
+<br>
+<div align="left" style="color: #DBA901; width: 30%;">Sign in </div>
+<br>
+<form action="/login">
+ 		<table frame="box" style="width: 30%" >
+ 		<tr style="height: 10px">
+	 		</tr>
+	 		<tr >
+	 			<td>
+	 			User Name:
+	 			</td>
+	 		
+	 			<td>
+	 			<input type="text" name="username" required="required" placeholder="User Name"/>
+	 			</td>
+	 		</tr>
+	 		<tr style="height: 10px">
+	 		</tr>
+	 		<tr>
+	 			<td>
+	 			Password:
+	 			</td>
+	 		
+	 			<td>
+	 			<input type="password" name="password" required="required" placeholder="Password"> 
+	 			</td>
+	 		</tr>
+	 		<tr style="height: 10px">
+	 		</tr>
+	 		<tr>
+	 			<td>
+	 			
+	 			</td>
+	 		
+	 			<td>
+	 			<input type="submit" name="submit" Value="Login"> 
+	 			<input type="button" name="cancel" Value="Cancel">
+	 			<a href="@{routes.Application.signup()}">SIgnup </a>
+	 			<button type="button" formmethod="get" formaction="@{routes.Application.signup()}">Sign Up</button>
+	 			<input type="button" name="signup" Value="Sign Up" formaction="@{routes.Application.signup()}">
+	 			</td>
+	 		</tr>
+	 		<tr style="height: 10px">
+	 		</tr>
+ 		</table>
+ 		<br>
+ 	</form>	
+</div>
+    
+}
+
+
+
+
