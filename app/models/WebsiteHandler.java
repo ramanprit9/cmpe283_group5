@@ -40,7 +40,6 @@ public class WebsiteHandler {
 	//create openstack instance
 	public void process(){
 		
-		String ImageId = null;
 		OSClient os = OSFactory.builder()
                 .endpoint("http://192.168.0.19:5000/v2.0")
                 .credentials("admin","test123")
@@ -48,44 +47,38 @@ public class WebsiteHandler {
                 .authenticate();
 		Tenant tenant = os.identity().tenants().getByName("admin");
 		
+		Tenant tenant = os.identity().tenants().getByName("admin");
+		System.out.println("tenant id: " + tenant.getId());
 		
-		if(service.getServicetype().contains("Website")){
-			
-			ImageId = "websiteVM";
-		}
-		if(service.getServicetype().equals("bigWebsite")){
-			
-			
-		}
 		
-		Image img = os.compute().images().get("websiteVM");
 		Flavor flavor = os.compute().flavors().get("1");
+		System.out.println("flavor id is:" + flavor.getName());
+		
+		
+		List<? extends Server> servers = os.compute().servers().list();
+		
+		Network network = os.networking().network().get("e219602b-dad5-4c85-b571-4059c186a2f8"); 
+		Network network1 = os.networking().network().get("319a8b77-086c-4b20-84f3-400861472f89");
+		
+		
+		ArrayList<String> networks1 = new ArrayList<String>();
+		networks1.add(network.getId());
+		networks1.add(network1.getId());
+		
 		ServerCreate sc = Builders.server()
-                .name(service.getUid()+service.getServicename()) //uid+website == 1:ghdk
+                .name("kuhf1") //uid+website == 1:ghdk
                 .flavor("1")
-                .image("imageId")
+                .image("3fe4b8c0-d90e-47c2-be10-81f14b83e71b")
+                .networks(networks1)
                 .addPersonality("/etc/motd", "Welcome to the new VM! Restricted access only")
                 .build();
+	
+		Server server = os.compute().servers().boot(sc);
 		
-		sc.getAvailabilityZone();
-		List<? extends Subnet> subnets = os.networking().subnet().list();
+		os.compute().servers().action(server.getId(), Action.START);
 		
-		List<? extends Network> networks = os.networking().network().list();
-		sc.addNetwork("net1","10.10.10.5");
 		
-		Port port = os.networking().port().create(Builders.port()
-	              .name("port-1")
-	              .networkId("networkId")
-	              .fixedIp("192.168.0.101", "subnetId")
-	              .build());
-		/*Router router = os.networking().router().create(Builders.router()
-                .name("ext_net")
-                .adminStateUp(true)
-                .externalGateway("networkId")
-                .route("192.168.0.0/24", "10.20.20.1")
-                .build());*/
-		FloatingIP ip = os.compute().floatingIps().allocateIP("pool");
-		sc.addNetwork("public", ip.getFloatingIpAddress());
+	
 		
 	}
 	
