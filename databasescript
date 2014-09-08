@@ -10,6 +10,7 @@ CONSTRAINT usersconstraint_pk PRIMARY KEY(uid)
 ----->CREATE TABLE service(serviceid , uid(fk), servicetype, status, date-created, json);
 CREATE TABLE services(
 serviceid INTEGER NOT NULL UNIQUE,
+servicename VARCHAR(255) NOT NULL UNIQUE,
 uid INTEGER NOT NULL,
 servicetype VARCHAR(255) NOT NULL,
 status VARCHAR(20) ,
