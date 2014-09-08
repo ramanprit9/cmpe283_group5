@@ -1,18 +1,22 @@
 package controllers;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import models.DataAccess;
+import models.Service;
+import models.User;
 import models.Website;
 import models.WebsiteHandler;
 import play.Logger;
+import play.api.mvc.Session;
 import play.db.*;
 import play.data.Form;
 import play.libs.Json;
@@ -22,114 +26,115 @@ import views.html.*;
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(index.render("Your not so new application is ready."));
+    	
+    	
+    	ArrayList<String> webservices = new ArrayList<String>();
+    	ArrayList<String> dbservices = new ArrayList<String>();
+    	
+    	webservices.add("jason");
+    	webservices.add("website");
+    	
+    	dbservices.add("mysql");
+    	dbservices.add("postgres");
+    	
+        return ok(index.render("Hello World!"));
     }
     
-    public static Result hello() throws SQLException {
-    	Form<Website> websiteForm = Form.form(Website.class);
-    	Website website = websiteForm.bindFromRequest().get();
-        String name = website.getName();
-        String plan = website.getPlan();
-        Statement stmt = null;
-        int status = 0;
-        Connection connection = DB.getConnection();
-        try {
-			stmt = connection.createStatement();
-			String sql;
-	        sql = "INSERT INTO nameplan VALUES('"+ website.getName()+"','"+ website.getPlan()+"')";
-	        System.out.println("sql statement:-->"+ sql);
-	        status = stmt.executeUpdate(sql);
-	       /* ResultSet rs = stmt.executeQuery(sql);
-	        while(rs.next()){
-	            //Retrieve by column name
-	            int id  = rs.getInt("id");
-	            int age = rs.getInt("age");
-	            String first = rs.getString("first");
-	            String last = rs.getString("last");
-
-	            //Display values
-	            System.out.print("ID: " + id);
-	            System.out.print(", Age: " + age);
-	            System.out.print(", First: " + first);
-	            System.out.println(", Last: " + last);
-	         }
-	        rs.close();*/
-	        if(status == 0){
-	        	System.out.println("Successfully created");
-	        }
-	        connection.close();
+    public static Result hello() {
+        return ok("Hello World");
+    }
+    
+    public static Result dashboard(){
+    	
+    	DataAccess db = new DataAccess();
+    	HashMap<String,ArrayList<String>> allservices = new HashMap<String,ArrayList<String>>();
+    	ArrayList<String> webservices = new ArrayList<String>();
+    	ArrayList<String> dbservices = new ArrayList<String>();
+    	try {
+			allservices = db.getAll();
+			if(allservices != null){
+				webservices = allservices.get("webservice");
+				dbservices = allservices.get("dbservice");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        finally{
-        	connection.close();
-        }
-        
-        //DataSource ds = DB.getDatasource();
-        
-        return ok(Json.toJson(website));
+    	return ok(dashboard.render(webservices,dbservices));
     }
-    public static Result helloAll() throws SQLException{
-    	Statement stmt = null;
-    	String name = "";
-    	String plan = "";
-    	Connection connection = DB.getConnection();
-        try {
-			stmt = connection.createStatement();
-			String sql;
-	        sql = "SELECT * FROM nameplan";
-	        System.out.println("sql statement:-->"+ sql);
-	        ResultSet rs = stmt.executeQuery(sql);
-	        while(rs.next()){
-	            //Retrieve by column name
-	            name  = rs.getString("name");
-	            plan = rs.getString("plan");
-
-	            //Display values
-	            System.out.print("NAME: " + name);
-	            System.out.print(", PLAN: " + plan);
-	            
-	         }
-	        rs.close();
-	        connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        finally{
-        	connection.close();
-        }
-        
-        //DataSource ds = DB.getDatasource();
-    	return ok( "Hello:"+name +"and" +plan);
-    }
-    public static Result createWebsite() throws SQLException{
+    public static Result createWebsite() throws SQLException {
     	
     	String name = null;
     	String plan = null;
-    	String servicetype = null;
-    	
+    	WebsiteHandler job = null;
+    	int status = 0;
+    	DataAccess db = new DataAccess();
+    	Service service = new Service();
+    	Date date = new Date();
     	JsonNode json = request().body().asJson();
     	Logger.debug("json request is:"+ json);
     	
+    	
     	//retrieving user session
-    	String user = session("connected");
+    	String user = session("username");
+    	String uid = session("uid");
     	Logger.debug("User ID: "+ user);
    	
     	if(json != null) {
     	    name = json.findPath("name").textValue();
+    	    service.setServicename(name);
     	    plan = json.findPath("plan").textValue();
     	    //determining service type
     	    if(plan.equals("gold")){
-    	    	servicetype = "smallWebsite";
+    	    	service.setServicetype("smallWebsite");
     	    }else{
-    	    	servicetype = "bigWebsite";
+    	    	service.setServicetype("bigWebsite");
     	    }
-    	    WebsiteHandler job = new WebsiteHandler(servicetype);
-    	    job.save(json.toString());
+    	    status = db.saveWebsitetoServices(uid, service.getServicename(), service.getServicetype(),date.toString(), json.toString());
+    	    service = db.getServiceByName(service.getServicename());
+    	    String jobjson = Json.toJson(service).toString();
+    	    job = new WebsiteHandler(service);
+    	    status = job.save(jobjson);
     	  }
-    	return ok("Hello " + name);
+    	return ok(createWebsite.render("Hello World"));
     }
-
+    public static Result signup(){
+    	return ok(signup.render("Hello World"));
+    }
+    public static Result createuser(){
+    	
+    	Form<User> UserForm = Form.form(User.class);
+    	User user = UserForm.bindFromRequest().get();
+        DataAccess da = new DataAccess();
+        try {
+        	int status = 0;
+			status = da.createUser(user);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return ok(index.render("User Created"));
+    }
+    public static Result login(){
+    	return ok(login.render("Hello World"));
+    }
+    public static Result loginUser(){
+    	
+    	Form<User> UserForm = Form.form(User.class);
+    	User user = UserForm.bindFromRequest().get();
+    	DataAccess da = new DataAccess();
+    	User user1 = new User();
+    	try {
+			user1 = da.getUser(user);
+			if(user1!= null)
+			{
+				session("username", user.getUsername());
+				session("uid", user.getUid());
+				return redirect("/dashboard");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return ok(login.render("Hello World"));
+    }
+    
 }
