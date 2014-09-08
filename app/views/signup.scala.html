@@ -1,0 +1,72 @@
+@(message: String)
+
+@main("Welcome to My Play") {
+
+<div style="background-color: #3F4042; height: 100px;font-size: medium;color: white">
+</div>
+<div align="center">
+<br>
+<br>
+<br>
+<div align="left" style="color: #DBA901; width: 30%;"><h2>Create your account.</h2> It's <b>free</b> and takes less than 30 seconds </div>
+<br>
+<form action="/createuser" method="post">
+ 		<table frame="box" style="width: 30%" >
+ 		<tr style="height: 10px">
+	 		</tr>
+	 		<tr >
+	 			<td>
+	 			User Name:
+	 			</td>
+	 		
+	 			<td>
+	 			<input type="text" name="username" required="required" placeholder="User Name"/>
+	 			</td>
+	 		</tr>
+	 		<tr style="height: 10px">
+	 		</tr>
+	 		<tr>
+	 			<td>
+	 			Password:
+	 			</td>
+	 		
+	 			<td>
+	 			<input type="password" name="password" required="required" placeholder="Password"> 
+	 			</td>
+	 		</tr>
+	 		<tr style="height: 10px">
+	 		</tr>
+	 		<tr>
+	 			<td>
+	 			Confirm Password:
+	 			</td>
+	 		
+	 			<td>
+	 			<input type="password" name="cpassword" required="required" placeholder="Password again"> 
+	 			</td>
+	 		</tr>
+	 		<tr style="height: 10px">
+	 		</tr>
+	 		<tr>
+	 			<td>
+	 			
+	 			</td>
+	 		
+	 			<td>
+	 			<input type="submit" name="submit" Value="SignUp"> 
+	 			<button type="submit"> <a href="@{routes.Application.login()}"style="text-decoration: none;">Cancel </a></button>
+	 			<input type="" name="cancel" Value="Cancel" formaction="@{routes.Application.login()}" formmethod="get"> 
+	 			</td>
+	 		</tr>
+	 		<tr style="height: 10px">
+	 		</tr>
+ 		</table>
+ 		<br>
+ 	</form>	
+</div>
+    
+}
+
+
+
+
