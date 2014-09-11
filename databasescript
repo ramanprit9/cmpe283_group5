@@ -41,7 +41,7 @@ starttime TIMESTAMP,
 endtime TIMESTAMP,
 CONSTRAINT usage_fk_uid FOREIGN KEY(userid) REFERENCES users(uid),
 CONSTRAINT usage_fk_sid FOREIGN KEY(serviceid) REFERENCES services(serviceid),
-CONSTRAINT usage_fk_id FOREIGn KEY(resourceid) REFERENCES resources(resourceid)
+CONSTRAINT usage_fk_id FOREIGN KEY(resourceid) REFERENCES resources(resourceid)
 ON DELETE CASCADE
 );
 
