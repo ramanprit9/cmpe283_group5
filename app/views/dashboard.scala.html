@@ -1,70 +1,88 @@
-@(webservices : List[String], dbservices :List[String]) 
+@(webservices : List[String], dbservices :List[String] , username : String) 
 
 @main("Welcome to My Play") {
 
-
-<div style="background-color: #3F4042; height: 100px">
-
+<div style="background-color: #3F4042; height: 100px;font-size: medium;color: white;">
 </div>
-<div align="center">
 <br>
 <br>
 <br>
-<div align="left" style="color: #DBA901; width: 60%; height: 70%">Logged in as: Jason </div>
+<div align="center" style="color: #33bdef; width: 100%;font-size: xx-large;">Welcome  @username</div>
 <br>
+<div class="container">
+	<div class="row main-features">
 
- 		<table cellspacing="6" border="1" style="width: 60%; height: 70%;"  >
- 		<tr align="center">
- 			<td >
- 				<table>
- 				<tr>
- 				<td>
- 					Websites:
- 				</td>
- 				</tr>
-	 				<tbody>
-							@for(webname <- webservices) {
-							<tr>
-								<td><a href="">@webname</a></td>
-							</tr>
-							}
-						</tbody>
-	 				
- 				</table>
- 			</td>
- 			<td>
-	 				<table >
-	 				<tr>
- 				<td>
- 					Database:
- 				</td>
- 				</tr>
-						<tbody>
-							@for(dbname <- dbservices) {
-							<tr>
-								<td><a href="">@dbname</a></td>
-							</tr>
-							}
-						</tbody>
-					</table>
-	 				
- 			</td>
- 			<td>
- 				<table>
-	 				<tr >
-	 					<td>
-	 				green
-	 					</td>
-	 				</tr>
-	 				
- 				</table>
- 			</td>
- 		</tr>
- 		</table>
+		<div class="col-md-4">
+			<div class="span4">
+				<div class="well">
+					<h3>Websites</h3>
+					<p>Click a Website to View:</p>
+					<div class="scrolling-table">
+						<table class="table table-condensed">
+							<tbody>
+							@if(webservices != null){
+								@for(webname <- webservices) {
+								<tr>
+									<td><a href="">@webname</a></td>
+								</tr>
+								}
+								}
+							</tbody>
+						</table>
+					</div>
+					<div class="pad-top">
+						<a  href="@{routes.Application.createWebsite()}"
+							class="myButton">New Website</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="col-md-4">
+			<div class="span4">
+				<div class="well">
+					<h3>Databases</h3>
+					<p>Click a Database to view:</p>
+					<div class="scrolling-table">
+						<table class="table table-condensed">
+							<tbody>
+							@if(webservices != null){
+								@for(dbname <- dbservices) {
+								<tr>
+									<td><a href="">@dbname</a></td>
+								</tr>
+								}
+								}
+							</tbody>
+						</table>
+					</div>
+					<div class="pad-top">
+						<a  href=""
+							class="myButton">New Database</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="col-md-4">
+			<div class="span4">
+				<div class="well">
+					<h3>3rd Service</h3>
+					<p>Click a ******* to View:</p>
+					<div class="scrolling-table">
+						<table class="table table-condensed">
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+					<div class="pad-top">
+						<a href=""
+							class="myButton">New 3rd service</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
 </div>
-    
 }
-
-
-
-
