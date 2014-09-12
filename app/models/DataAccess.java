@@ -76,7 +76,7 @@ public class DataAccess {
 		try{
 			stmt = connection.createStatement();
 			String sql;
-			sql = "INSERT INTO users VALUES('"+user.getUsername()+"','"+user.getPassword()+")";
+			sql = "INSERT INTO users(uname,pwd) VALUES('"+user.getUsername()+"','"+user.getPassword()+"')";
 			Logger.debug("inserting into users table: "+sql);
 			status = stmt.executeUpdate(sql);
 			connection.close();
@@ -96,16 +96,16 @@ public class DataAccess {
 		try{
 			stmt = connection.createStatement();
 			String sql;
-			sql = "SELECT * FROM USERS WHERE username=" + user.getUsername() +"AND password="+ user.getPassword()+")";
+			sql = "SELECT * FROM users WHERE uname='" + user.getUsername() +"' AND pwd='"+ user.getPassword()+"'";
 			Logger.debug("inserting into users table: "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
 				//Retrieve by column name
-				Integer id  = rs.getInt("uid");
-				user.setUid(id.toString());
-				user.setUsername(rs.getString("username"));
+				user.setUid(rs.getInt("uid"));
+				user.setUsername(rs.getString("uname"));
 			}
 			rs.close();
+			
 			connection.close();
 		}catch (Exception e) {
 			Logger.error("ERROR while fetching user details from users table: "+ e.getMessage());
@@ -160,7 +160,7 @@ public class DataAccess {
 		return status;
 	}
 
-	public HashMap<String,ArrayList<String>> getAllServices() throws SQLException{
+	public HashMap<String,ArrayList<String>> getAllServices(Integer uid) throws SQLException{
 
 		Logger.debug("------Entered into getAllServices() method in DataAccess -------fetch all existing services for user");
 		ArrayList<String> webservice = new ArrayList<String>();
@@ -171,7 +171,8 @@ public class DataAccess {
 		try{
 			stmt = connection.createStatement();
 			String sql;
-			sql = "SELECT * FROM SERVICES";
+			sql = "SELECT * FROM services WHERE uid="+uid;
+			Logger.debug("getting all services: "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
 				//Retrieve by column name
