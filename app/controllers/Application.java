@@ -11,6 +11,7 @@ import models.Service;
 import models.User;
 import models.WebsiteHandler;
 import play.Logger;
+import play.Routes;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
@@ -20,7 +21,7 @@ public class Application extends Controller {
 
 	public static Result index() {
 
-
+		Logger.debug("------Entered into index() method in Application Controller------");
 		ArrayList<String> webservices = new ArrayList<String>();
 		ArrayList<String> dbservices = new ArrayList<String>();
 
@@ -29,19 +30,19 @@ public class Application extends Controller {
 
 		dbservices.add("mysql");
 		dbservices.add("postgres");
-
-		return ok(dashboard.render(webservices,dbservices));
+		Logger.debug("------Entered into index() method in Application Controller------");
+		return ok(dashboard.render(webservices,dbservices , session("username")));
 	}
 
 	public static Result dashboard(){
-
-		Logger.debug("------Entered into Dashboard() method in Application Controller------");
 		DataAccess db = new DataAccess();
 		HashMap<String,ArrayList<String>> allservices = new HashMap<String,ArrayList<String>>();
 		ArrayList<String> webservices = new ArrayList<String>();
 		ArrayList<String> dbservices = new ArrayList<String>();
+		int userid = Integer.parseInt(session("uid"));
+		Logger.debug("user id is: "+ userid);
 		try {
-			allservices = db.getAllServices();
+			allservices = db.getAllServices(userid);
 			if(allservices != null){
 				webservices = allservices.get("webservice");
 				dbservices = allservices.get("dbservice");
@@ -49,8 +50,8 @@ public class Application extends Controller {
 		} catch (Exception e) {
 			Logger.error("ERROR While fetching services from database: "+ e.getMessage());
 		}
-		Logger.debug("------Exit from Dashboard() method in Application Controller------");
-		return ok(dashboard.render(webservices,dbservices));
+
+		return ok(dashboard.render(webservices,dbservices , session("username")));
 	}
 	public static Result createWebsite()  {
 
@@ -63,11 +64,12 @@ public class Application extends Controller {
 		Date date = new Date();
 		JsonNode json = request().body().asJson();
 		Logger.debug("json request is:"+ json);
+		//retrieving user session
+		String user = session("username");
+		String uid = session("uid");
 
 		try{
-			//retrieving user session
-			String user = session("username");
-			String uid = session("uid");
+			
 			Logger.debug("User ID: "+ user);
 
 			if(json != null) {
@@ -97,16 +99,17 @@ public class Application extends Controller {
 			}
 		}catch (Exception e) {
 			Logger.error("ERROR while fetching or saving service details from database: "+ e.getMessage());
+			return ok(createWebsite.render(e.getMessage(), user , uid));
 		}
 
 		Logger.debug("------Exit from createWebsite() method in Application Controller------");
-		return ok(createWebsite.render("Hello World"));
+		return ok(createWebsite.render("success", user, uid));
 	}
 	public static Result signup(){
 		Logger.debug("------Entered into signup() method in Application Controller------");
 
 		Logger.debug("------Exit from signup() method in Application Controller------");
-		return ok(signup.render("SignUp"));
+		return ok(signup.render(" "));
 	}
 	public static Result createuser(){
 
@@ -122,9 +125,10 @@ public class Application extends Controller {
 			}
 		} catch (Exception e) {
 			Logger.error("ERROR while creating user: "+ e.getMessage());
+			return ok(login.render(e.getMessage()));
 		}
 		Logger.debug("------Exit from createuser() method in Application Controller------");
-		return ok(index.render("User Created"));
+		return ok(login.render("User Created"));
 	}
 	public static Result login(){
 		Logger.debug("------Entered into login() method in Application Controller------");
@@ -138,13 +142,18 @@ public class Application extends Controller {
 		Form<User> UserForm = Form.form(User.class);
 		User user = UserForm.bindFromRequest().get();
 		DataAccess da = new DataAccess();
+		
+		/*webservices.add("website");
+
+		dbservices.add("mysql");
+		dbservices.add("postgres");*/
 		User user1 = new User();
 		try {
 			user1 = da.getUser(user);
 			if(user1!= null)
 			{
 				session("username", user.getUsername());
-				session("uid", user.getUid());
+				session("uid", user.getUid().toString());
 				return redirect("/dashboard");
 			}else{
 				throw new Exception("user doesnot exist");
@@ -153,7 +162,19 @@ public class Application extends Controller {
 			Logger.error("ERROR while fetching user details from database: "+ e.getMessage());
 		}
 		Logger.debug("------Exit from loginUser() method in Application Controller------");
-		return ok(login.render("Welcome"));
+		return redirect("/dashboard");
 	}
+	 /*public static Result bigWebService() {
+	        return ok(bigWebService.render("Hello World"));
+	    }
+	   
+	    public static Result smallWebService() {
+	        return ok(websiteDetails.render("Hello World"));
+	    }
+	   
+	    public static Result dbService() {
+	        return ok(dbService.render("Hello World"));
+	    }*/
+	
 
 }
