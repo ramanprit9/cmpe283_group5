@@ -2,16 +2,15 @@
 
 @main("Welcome to My Play") {
 
-
 <div style="background-color: #3F4042; height: 100px;font-size: medium;color: white">
 </div>
 <div align="center">
 <br>
 <br>
 <br>
-<div align="left" style="color: #DBA901; width: 30%;">Sign in </div>
+<div align="left" style="color: #33bdef; width: 30%; font-size: xx-large;"><b>Sign in</b> </div>
 <br>
-<form action="/login">
+<form action="/loginUser" method="post">
  		<table frame="box" style="width: 30%" >
  		<tr style="height: 10px">
 	 		</tr>
@@ -21,7 +20,7 @@
 	 			</td>
 	 		
 	 			<td>
-	 			<input type="text" name="username" required="required" placeholder="User Name"/>
+	 			<input type="text" id="username" name="username" required="required" placeholder="User Name"/>
 	 			</td>
 	 		</tr>
 	 		<tr style="height: 10px">
@@ -32,7 +31,7 @@
 	 			</td>
 	 		
 	 			<td>
-	 			<input type="password" name="password" required="required" placeholder="Password"> 
+	 			<input type="password" id="password" name="password" required="required" placeholder="Password"> 
 	 			</td>
 	 		</tr>
 	 		<tr style="height: 10px">
@@ -43,16 +42,17 @@
 	 			</td>
 	 		
 	 			<td>
-	 			<input type="submit" name="submit" Value="Login"> 
-	 			<input type="button" name="cancel" Value="Cancel">
-	 			<a href="@{routes.Application.signup()}">SIgnup </a>
-	 			<button type="button" formmethod="get" formaction="@{routes.Application.signup()}">Sign Up</button>
-	 			<input type="button" name="signup" Value="Sign Up" formaction="@{routes.Application.signup()}">
+	 			<input  class="myButton" style="padding:7px 18px;" type="submit" name="login" Value="Sign In">
+	 			<a class="myButton" style="padding:7px 18px;" href="@{routes.Application.login()}">Cancel </a>
 	 			</td>
 	 		</tr>
 	 		<tr style="height: 10px">
 	 		</tr>
  		</table>
+ 		<br>
+ 		<br>
+ 		<br>
+ 		<a class="myButton" href="@{routes.Application.signup()}">Create New Account </a>
  		<br>
  	</form>	
 </div>
