@@ -1,4 +1,4 @@
-@(message: String)
+@(message: String, username: String , userid: String)
 
 @main("Welcome to My Play") {
 
@@ -9,9 +9,9 @@
 <br>
 <br>
 <br>
-<div align="left" style="color: #DBA901; width: 30%;">Logged in as: Jason </div>
+<div align="left" style="color: #33bdef; width: 30%;font-size: xx-large;">Logged in as: @username </div>
 <br>
-
+<form action="/create" method="post">
  		<table frame="box" style="width: 30%" >
  		<tr style="height: 10px">
 	 		</tr>
@@ -21,7 +21,7 @@
 	 			</td>
 	 		
 	 			<td>
-	 			<input type="text" name="webname" />
+	 			<input type="text" name="webname" name="webname" required="required" />
 	 			</td>
 	 		</tr>
 	 		<tr style="height: 10px">
@@ -32,9 +32,9 @@
 	 			</td>
 	 		
 	 			<td>
-	 			<input type="radio" name="plan" Value="smallWebsite"> Silver
+	 			<input type="radio" name="plan" Value="smallWebsite" required="required"> Silver
 	 			
-	 			<input type="radio" name="plan" Value="bigWebsite"> Gold
+	 			<input type="radio" name="plan" Value="bigWebsite" required="required"> Gold
 	 			</td>
 	 		</tr>
 	 		<tr style="height: 10px">
@@ -45,8 +45,7 @@
 	 			</td>
 	 		
 	 			<td>
-	 			<input type="submit" name="submit" Value="Submit"> 
-	 			<input type="button" name="cancel" Value="Cancel"> 
+	 			<input  class="myButton"  style="padding:7px 18px;" type="submit" name="submit" Value="Submit"/>
 	 			</td>
 	 		</tr>
 	 		<tr style="height: 10px">
@@ -54,24 +53,25 @@
  		</table>
  		<br>
  		
- 		<div align="left" style="color: #DBA901; width: 30%;">
+ 		<div align="left" style="color: #33bdef; width: 30%;">
  		
  		<h4>Silver:</h4>
- 		<ul>	
+ 		<b><ul>	
  			<li>RAM: 512MB</li>
  			<li>Storage: 3GB</li>
  			<li>No. of VMs : 1</li>
- 			</ul>
+ 			</ul></b>
  		<h4>Gold:</h4>
- 			<ul>
+ 		<b><ul>
  			<li>RAM: 1GB</li>
  			<li>Storage: 5GB</li>
  			<li>No. of VMs : 2</li>
- 			</ul>
+ 			</ul></b>
  		
  		</div>
+ 		@message
 </div>
-    
+    </form>	
 }
 
 
