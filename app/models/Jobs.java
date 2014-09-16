@@ -1,6 +1,6 @@
 package models;
 
-public class Job {
+public class Jobs {
 	private String jobid;
 	private String jobclassname;
 	private String json;
