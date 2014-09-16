@@ -1,6 +1,6 @@
 package models;
 
-public class Resource {
+public class Resources {
 	
 	private String resourceid;
 	private String serviceid;
