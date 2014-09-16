@@ -3,13 +3,20 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.login()
-GET     /create			    		controllers.Application.createWebsite()
+GET     /                           controllers.Application.index()
+GET     /showcreate					controllers.Application.showcreateWebsite()
+POST    /create						controllers.Application.createWebsite()
 GET     /dashboard					controllers.Application.dashboard()
 GET     /signup						controllers.Application.signup()
 GET     /login						controllers.Application.login()
+GET     /logout						controllers.Application.logout()
 POST    /createuser					controllers.Application.createuser()
 POST    /loginUser					controllers.Application.loginUser()
+GET    /fetchcreateDatabase			controllers.Application.fetchcreateDatabasepage()
+POST    /createDatabase				controllers.Application.createDatabase()
+
+
+
 
 
 # Map static resources from the /public folder to the /assets URL path
