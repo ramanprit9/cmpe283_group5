@@ -1,8 +1,8 @@
 package models;
 
-public class User {
+public class Users {
 	
-	private String uid;
+	private Integer uid;
 	private String username;
 	private String password;
 	private String cpassword;
@@ -25,10 +25,10 @@ public class User {
 	public void setCpassword(String cpassword) {
 		this.cpassword = cpassword;
 	}
-	public String getUid() {
+	public Integer getUid() {
 		return uid;
 	}
-	public void setUid(String uid) {
+	public void setUid(Integer uid) {
 		this.uid = uid;
 	}
 	
