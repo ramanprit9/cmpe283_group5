@@ -20,3 +20,6 @@ libraryDependencies += "org.pacesys" % "openstack4j" % "1.0.1"
 libraryDependencies += "org.webjars" %% "webjars-play" % "2.3.0"
 
 libraryDependencies += "org.webjars" % "bootstrap" % "3.1.1-2"
+
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.6"
+
