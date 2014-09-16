@@ -1,6 +1,6 @@
 package models;
 
-public class Service {
+public class Services {
 	
 	private String serviceid;
 	private String servicename;
