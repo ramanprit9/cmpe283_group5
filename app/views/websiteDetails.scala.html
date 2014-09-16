@@ -1,0 +1,114 @@
+@(service: models.Services, resource : models.Resources , usage: models.ResourceUsage)
+
+@main("Welcome to My Play") {
+
+
+<div style="background-color: #3F4042; height: 100px;font-size: medium;color: yellow">
+</div>
+<div align="center">
+<br>
+<br>
+<br>
+<div align="left" style="color: #DBA901; width: 30%;">Logged in as: Jason </div>
+<br>
+
+ 		<table frame="box" style="width: 30%" >
+ 		<tr style="height: 10px">
+	 		</tr>
+	 		<tr>
+	 			<td>
+	 			Website Name:
+	 			</td>
+	 		
+	 			<td>
+	 			@service.getServicename()
+	 			</td>
+	 		</tr>
+	 		<tr style="height: 10px">
+	 		</tr>
+	 		<tr>
+	 			<td>
+	 			Plan:
+	 			</td>
+	 		
+	 			<td>
+	 			@service.getServicetype()
+	 			</td>
+	 		</tr>
+	 		<tr style="height: 10px">
+	 		</tr>
+	 		<tr>
+	 			<td>
+	 			Created On:
+	 			</td>
+	 		
+	 			<td>
+	 			@service.getDatecreated()
+	 			</td>
+	 		</tr>
+	 		<tr style="height: 10px">
+	 		</tr>
+	 		<tr>
+	 			<td>
+	 			VM State:
+	 			</td>
+	 		
+	 			<td>
+	 			@resource.getStatus()
+	 			</td>
+	 		</tr>
+	 		<tr style="height: 10px">
+	 		</tr>
+	 		<tr>
+	 			<td>
+	 			VM Start:
+	 			</td>
+	 		
+	 			<td>
+					<img src='www.clker.com/cliparts/6/g/V/Z/v/2/stop-button-red-th.png'>
+	 			</td>
+	 		</tr>
+	 		<tr>
+	 			<td>
+	 			VM Stop:
+	 			</td>
+	 		
+	 			<td>
+	 			<img src='www.clker.com/cliparts/E/Q/i/W/w/W/wiz-ka-th.png'>
+	 			</td>
+	 		</tr>
+	 		
+	 		<tr>
+	 		<td>
+	 		<font size="5" color=>Usage Time and Bill</font>
+	 		<table frame="box" style="width: 30%">
+  			<tr align="center">
+    			<th>Total Running Time (in hours)</th>
+    			<th>Cost per hour</th>
+    			<th>Total</th>
+  			</tr>
+  			<tr>
+    			<td align="center">
+    				<label for="runningtime">  </label>
+   				</td>
+    			<td align="center">
+    				<label for="costperhour">  </label>
+   				</td>
+   				<td align="center">
+    				<label for="totalcost">  </label>
+   				</td>
+  			</tr>
+		</table> 
+	 		</td>
+	 		</tr>
+ 		</table>
+ 		<br>
+ 		
+ 		
+</div>
+    
+}
+
+
+
+
